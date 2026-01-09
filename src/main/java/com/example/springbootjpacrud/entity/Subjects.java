@@ -1,5 +1,6 @@
 package com.example.springbootjpacrud.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -13,6 +14,7 @@ public class Subjects
     private String name;
 
     @ManyToMany(mappedBy = "subjects")
+    @JsonIgnore
     private List<Student> students;
 
     public Subjects()

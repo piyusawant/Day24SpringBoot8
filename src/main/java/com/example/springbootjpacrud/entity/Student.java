@@ -1,11 +1,12 @@
 package com.example.springbootjpacrud.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
-import javax.security.auth.Subject;
 import java.util.List;
 
 @Entity
+@Table(name = "students")
 public class Student
 {
     @Id
@@ -15,24 +16,28 @@ public class Student
     @Column(name = "student_name", nullable = false)
     private String name;
 
-    private double marks;
+    private int marks;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "profile_id")
     private Profile profile;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "dept_id")
-    private Department department;
+    @OneToMany(
+            mappedBy = "student",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
+    )
+   
+    private List<Address> addresses;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "student_subject", joinColumns = @JoinColumn(name = "student_id"),
     inverseJoinColumns = @JoinColumn(name = "subject_id"))
+
     private List<Subjects> subjects;
 
     public Student()
     {
-
     }
 
     //getter and Setter
@@ -53,11 +58,11 @@ public class Student
     {
         this.name = name;
     }
-    public double getMarks()
+    public int getMarks()
     {
         return marks;
     }
-    public void setMarks(double marks)
+    public void setMarks(int marks)
     {
         this.marks = marks;
     }
@@ -69,13 +74,13 @@ public class Student
     {
         this.profile = profile;
     }
-    public Department getDepartment()
+    public List<Address> getAddresses()
     {
-        return department;
+        return addresses;
     }
-    public void setDepartment(Department department)
+    public void setAddresses(List<Address> addresses)
     {
-        this.department = department;
+        this.addresses = addresses;
     }
     public List<Subjects> getSubjects()
     {

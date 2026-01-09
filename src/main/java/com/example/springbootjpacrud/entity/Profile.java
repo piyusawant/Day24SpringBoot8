@@ -9,11 +9,7 @@ public class Profile
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String email;
-
-    @OneToOne(mappedBy = "profile")
-    private Student student;
-
+    private String phone;
     public Profile(){
 
     }
@@ -26,19 +22,12 @@ public class Profile
         this.id = id;
     }
 
-    public String getEmail() {
-        return email;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
-    public Student getStudent() {
-        return student;
-    }
-
-    public void setStudent(Student student) {
-        this.student = student;
-    }
 }
