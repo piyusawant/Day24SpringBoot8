@@ -13,18 +13,18 @@ public class StudentJdbcDao
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public int save(StudentDTO dto)
+    public int saveJdbc(StudentDTO dto)
     {
-        String sql = "INSERT INTO student(name,marks) VALUES(?,?)";
+        String sql = "INSERT INTO student(student_name, marks) VALUES(?,?)";
         return jdbcTemplate.update(sql, dto.getName(), dto.getMarks());
     }
 
-    public List<StudentDTO> findAll()
+    public List<StudentDTO> findAllJdbc()
     {
-        return jdbcTemplate.query("SELECT name, marks FROM student",
+        return jdbcTemplate.query("SELECT student_name, marks FROM student",
                 (rs, rowNum) -> {
             StudentDTO s = new StudentDTO();
-            s.setName(rs.getString("name"));
+            s.setName(rs.getString("student_name"));
             s.setMarks(rs.getInt("marks"));
             return s;
                 });

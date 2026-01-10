@@ -1,5 +1,6 @@
 package com.example.springbootjpacrud.controller;
 
+import com.example.springbootjpacrud.entity.Address;
 import com.example.springbootjpacrud.entity.Student;
 import com.example.springbootjpacrud.entity.dto.StudentDTO;
 import com.example.springbootjpacrud.jdbc.StudentJdbcDao;
@@ -22,6 +23,12 @@ public class StudentController
     @PostMapping
     public Student create(@RequestBody Student student)
     {
+        if(student.getAddresses() != null)
+        {
+            for(Address address : student.getAddresses()) {
+                address.setStudent(student);
+            }
+        }
         return studentService.save(student);
     }
 
@@ -38,11 +45,18 @@ public class StudentController
     }
 
     //JDBC
+    @PostMapping("/jdbc/save")
     public String saveJdbc(@RequestBody StudentDTO dto)
     {
-        jdbcDao.save(dto);
-        return "Saved Using JDBCTemplate";
+        int rows = jdbcDao.saveJdbc(dto);
+        return rows > 0 ? "Student saved Using JDBC Template" : "Failed to save data";
     }
+    @GetMapping("jdbc/all")
+    public List<StudentDTO> findAllJdbc()
+    {
+        return jdbcDao.findAllJdbc();
+    }
+
 
 
 }

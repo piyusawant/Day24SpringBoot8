@@ -13,9 +13,9 @@ public class Address
 
     private String city;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "student_id")
-    @JsonIgnore
+    @JsonBackReference
     private Student student;
 
     public Address(){

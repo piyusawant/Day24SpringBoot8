@@ -19,7 +19,7 @@ public class StudentService
     }
     public List<Student> getAll()
     {
-        return studentRepository.findAll();
+        return studentRepository.findWithAddresses();
     }
     public void delete(Long id)
     {

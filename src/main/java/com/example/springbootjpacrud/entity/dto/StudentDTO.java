@@ -5,6 +5,15 @@ public class StudentDTO
     private String name;
     private int marks;
 
+    public StudentDTO()
+    {
+
+    }
+    public StudentDTO(String name, int marks)
+    {
+        this.name = name;
+        this.marks = marks;
+    }
     public String getName()
     {
         return name;

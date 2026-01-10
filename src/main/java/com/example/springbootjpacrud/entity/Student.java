@@ -3,6 +3,7 @@ package com.example.springbootjpacrud.entity;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -24,11 +25,9 @@ public class Student
 
     @OneToMany(
             mappedBy = "student",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
-    )
-   
-    private List<Address> addresses;
+            cascade = CascadeType.ALL)
+   @JsonManagedReference
+    private List<Address> addresses = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "student_subject", joinColumns = @JoinColumn(name = "student_id"),
